@@ -5,6 +5,29 @@
 
 //#define EXIT_ON_FAILURE 1
 
+int copy() {
+  String s   = str_from_cstr("This is gonna me copied");
+  String cpy = str_copy(s);
+
+  assert(strcpy(strData(s), strData(cpy)));
+
+  str_destroy(s);
+  str_destroy(cpy);
+
+  return 0;
+}
+
+int slice() {
+  String s = str_from_cstr("Some String");
+  String slice = str_slice(s, 5, 11);
+
+  DEBUG("Sliced String: %s", strData(slice));
+  assert(strcmp(strData(slice), "String") == 0)
+
+  str_destroy(s);
+  str_destroy(slice);
+}
+
 int from_cstr() {
 
   String s = str_from_cstr("String");
@@ -58,6 +81,8 @@ int insert_char() {
 
 int main(void) {
 
+  RUN_TEST(copy);
+  RUN_TEST(slice);
   RUN_TEST(from_cstr);
   RUN_TEST(truncate);
   RUN_TEST(replace_all);
