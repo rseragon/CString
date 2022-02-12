@@ -99,15 +99,6 @@ String str_from_cstr(const char *cstr)
   return string;
 }
 
-String str_set(String str, char fill, size_t size) {
-  _str_allocator(str, size); 
-
-  for(size_t idx = 0; idx < size; ++idx) {
-    strData(str)[idx] = fill;
-  }
-
-  return str;
-}
 
 String str_copy(const String str) {
 
@@ -160,7 +151,39 @@ String str_slice(const String str, long int start, long int end) {
   return temp;
 }
 
-String str_insert(String str, const char* ins, size_t idx) {
+
+String str_set(String str, char fill, size_t size) {
+  _str_allocator(str, size); 
+
+  for(size_t idx = 0; idx < size; ++idx) {
+    strData(str)[idx] = fill;
+  }
+
+  return str;
+}
+
+
+// TODO: Memory leaks?
+String str_insert_char(String str, const char c, size_t insert_idx) {
+
+  if(insert_idx > strLength(str)) {
+    str->state = strError;
+    return str;
+  }
+
+  _str_allocator(str, strLength(str) + 2);
+
+  for(size_t curr_idx = strLength(str); curr_idx >= insert_idx; --curr_idx) {
+    strData(str)[curr_idx] = strData(str)[curr_idx-1];
+  }
+  strData(str)[insert_idx] = c;
+  strLength(str) += 1;
+  strData(str)[strLength(str)] = '\0';
+
+  return str;
+}
+
+String str_insert_cstr(String str, const char* ins, size_t idx) {
 
   String temp = str_slice(str, 0, idx);
   str_concat_cstr(temp, ins);
@@ -173,12 +196,14 @@ String str_insert(String str, const char* ins, size_t idx) {
   return temp;
 }
 
+// Return a new string?
 String str_concat_char(String str, const char c) {
   // Error checking?
 
   _str_allocator(str, strLength(str)+1); // Tho it's guranteed by me that the string
                                          // will have always an extra char space,
-                                         // but still
+                                         // but still 
+                                         // The above statement is false
 
   strData(str)[strLength(str)]   = c;
   strData(str)[strLength(str)+1] = '\0';
@@ -307,7 +332,7 @@ int str_cmp_slice_caseless(const String str1, const String str2,
   return (eq == len);
 }
 
-// better algo?
+// TODO: better algo?
 long int str_find_first(String str, const char* pattern) {
 
   int patLen = strlen(pattern);
@@ -335,7 +360,7 @@ long int str_find_first(String str, const char* pattern) {
 
 }
 
-// better algo?
+// TODO: better algo?
 long int str_find_last(String str, const char* pattern) {
 
   int patLen = strlen(pattern);
@@ -407,6 +432,11 @@ String str_replace_all(String str, const char* pattern, const char* replace) {
   strData(s)[final_len] = '\0';
   strLength(s) = final_len;
   s->state = strOk; 
+
+  // TODO: Fix memory leak
+  //str = str_move(str, s);
+  //return str;
+  
   return s;
 }
 

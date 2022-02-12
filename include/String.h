@@ -48,23 +48,15 @@ extern String STR_ERROR;
 /* 
  * Makes a default string with no data
  * Takes in size of string to make
- * returns String
+ * returns new String
  */
 String make_str(size_t size);
 
-/* Makes a String from char array */
-String str_from_cstr(const char *str);
-
-/*
- * Sets the given string with the value
- *
- * if the string size is small, it will
- * be automatically increased to meet the required
- * size
- *
- * returns the same string
+/* Makes a String from char array 
+ * Takes in const char *
+ * returns new String
  */
-String str_set(String str, char fill, size_t size);
+String str_from_cstr(const char *str);
 
 /* 
  * copipes a string 
@@ -80,7 +72,7 @@ String str_copy(const String str);
  * if dest is NULL, then it'll create a new string
  * and move into it
  *
- * Returns the first string 
+ * Returns the moved string 
  */
 String str_move(String dest, String src);
 
@@ -90,11 +82,30 @@ String str_move(String dest, String src);
  */
 String str_slice(const String str, long int start, long int end);
 
+
+
+/*
+ * Sets the given string with the value
+ *
+ * if the string size is small, it will
+ * be automatically increased to meet the required
+ * size
+ *
+ * returns the same string
+ */
+String str_set(String str, char fill, size_t size);
+
+/*
+ * Inserts the char at the given index
+ * returns the same string 
+ */
+String str_insert_char(String str, const char c, size_t idx);
+
 /*
  * Inserts the given string at the given index
- * returns the same string with inserted string
+ * returns the same? string with inserted string
  */
-String str_insert(String str, const char* ins, size_t idx);
+String str_insert_cstr(String str, const char* ins, size_t idx);
 
 /*
  * Append a char to current string
@@ -114,7 +125,7 @@ String str_concat_cstr(String str, const char * cstr);
  */
 String str_concat_str(String str1, const String str2);
 
-/* Helper functions start */
+/* Helper functions start */ // wdym by helper func?
 
 /*
  * Compares 2 Strings
@@ -185,9 +196,9 @@ long int str_find_first(String str, const char* pattern);
  */
 long int str_find_last(String str, const char* pattern);
 
-/* TODO
- * replaces the all the occurances with the given string
- * returns a new string
+/* replaces the all the occurances with the given string(does it in a new string, 
+ * and then moves it into the current string)
+ * returns a the final string
  */
 String str_replace_all(String str, const char* pattern, const char* replace);
 
