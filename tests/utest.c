@@ -26,6 +26,8 @@ int slice() {
 
   str_destroy(s);
   str_destroy(slice);
+
+  return 0;
 }
 
 int from_cstr() {
@@ -54,14 +56,13 @@ int truncate() {
 int replace_all() {
   String s = str_from_cstr("abc This is abc string abc");
 
-  String rep = str_replace_all(s, "abc", "bcd");
+  str_replace_all(s, "abc", "bcd");
 
-  DEBUG("Final String: %s", strData(rep));
-  DEBUG("String state: %d", rep->state);
-  assert(strcmp(strData(rep), "bcd This is bcd string bcd") == 0);
+  DEBUG("Final String: %s", strData(s));
+  DEBUG("String state: %d", s->state);
+  assert(strcmp(strData(s), "bcd This is bcd string bcd") == 0);
 
   str_destroy(s);
-  str_destroy(rep);
 
   return 0;
 }

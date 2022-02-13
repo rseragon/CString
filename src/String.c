@@ -120,7 +120,7 @@ String str_move(String dest, String src) {
 
   if(!dest)
     dest = (String) malloc(sizeof(struct _string)); 
-  else if(!dest->data)
+  else if(dest->data)
     free(dest->data);
 
   dest->length   = src->length;
@@ -433,11 +433,10 @@ String str_replace_all(String str, const char* pattern, const char* replace) {
   strLength(s) = final_len;
   s->state = strOk; 
 
-  // TODO: Fix memory leak
-  //str = str_move(str, s);
-  //return str;
-  
-  return s;
+  str = str_move(str, s);
+  str_destroy(s);
+  return str;
+
 }
 
 String str_foreach(String str, int (*apply)(int)) {
@@ -501,6 +500,12 @@ void str_destroy(String str) {
 
   if(str->data)
     free(str->data);
+
+  // TODO: clean up?
+  str->data = NULL;
+  str->length = 0;
+  str->capacity = 0;
+  str->state = strOk;
 
   free(str);
 }
