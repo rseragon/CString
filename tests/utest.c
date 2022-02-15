@@ -64,6 +64,17 @@ int replace_all() {
 
   str_destroy(s);
 
+
+  /* Null replace */
+  String temp = str_from_cstr("Some String String String string");
+  str_replace_all(temp, "String ", NULL);
+
+  DEBUG("Final String: %s", strData(temp));
+
+  assert(strcmp(strData(temp), "Some string") == 0);
+
+  str_destroy(temp);
+
   return 0;
 }
 
@@ -80,6 +91,18 @@ int insert_char() {
   return 0;
 }
 
+int replace_first() {
+  String s = str_from_cstr("Some string");
+  str_replace_first(s, "Some", "Another");
+
+  DEBUG("First replaced: %s", strData(s));
+
+  assert(strcmp(strData(s), "Another string") == 0);
+
+  str_destroy(s);
+  return 0;
+}
+
 int main(void) {
 
   RUN_TEST(copy);
@@ -88,5 +111,6 @@ int main(void) {
   RUN_TEST(truncate);
   RUN_TEST(replace_all);
   RUN_TEST(insert_char);
+  RUN_TEST(replace_first);
   
 }

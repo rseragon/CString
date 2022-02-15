@@ -1,6 +1,7 @@
 #include "String.h"
 #include <string.h> // strncpy, memset, strlen
 #include <ctype.h>  // toupper, tolower
+#include <stdlib.h> // abs, malloc
 
 // An error state string return type
 String STR_ERROR = &(struct _string) {0, 0, 0, strError};
@@ -41,7 +42,7 @@ static int _str_allocator(String str, size_t size)
 
     strncpy(temp, str->data, copy_size);
 
-    temp[copy_size] = '\0';  // NULL terminate the string
+    temp[copy_size] = '\0';  // terminate the string
 
     str->length = copy_size;
     str->capacity = size;
@@ -188,10 +189,12 @@ String str_insert_cstr(String str, const char* ins, size_t idx) {
   String temp = str_slice(str, 0, idx);
   str_concat_cstr(temp, ins);
 
-  String slice_temp = str_slice(str, idx, strLength(str));
-  temp = str_concat_str(temp, slice_temp);
+  //String slice_temp = str_slice(str, idx, strLength(str));
+  
+  // TODO: Check working
+  temp = str_concat_cstr(temp, strData(str) + idx);
 
-  str_destroy(slice_temp);
+  //str_destroy(slice_temp);
 
   return temp;
 }
@@ -388,14 +391,17 @@ long int str_find_last(String str, const char* pattern) {
   return -1;
 }
 
-// TODO: Need to check for bugs
+// TODO: Better algo?
+// Regex?
 String str_replace_all(String str, const char* pattern, const char* replace) {
 
   int pat_len = strlen(pattern);
   if(pat_len < 1)
     return str;
 
-  int rep_len = strlen(replace);
+  //int rep_len = strlen(replace);
+  if(!replace)
+    replace = "";
 
   size_t final_len = 0;
 
@@ -437,6 +443,53 @@ String str_replace_all(String str, const char* pattern, const char* replace) {
   str_destroy(s);
   return str;
 
+}
+
+String str_replace_first(String str, const char * pattern, const char* replace) {
+  if(!pattern)
+    return str;
+
+  int idx = str_find_first(str, pattern);
+
+  if(idx == -1) // Pattern not found
+    return str;
+
+  int pat_len = strlen(pattern);
+  int rep_len = strlen(replace);
+
+  // delete the pattern
+  if(!replace)
+    replace = "";
+
+  int len_diff = abs(rep_len - pat_len);
+
+  // In string opeartion: apply the replace in the same string
+  if(strLength(str) + rep_len < strCapacity(str)) {
+
+    // Move the current string
+    for(size_t curr_idx = strLength(str); curr_idx >= idx+pat_len; --curr_idx) 
+      strData(str)[curr_idx+len_diff] = strData(str)[curr_idx];   
+    
+    // pastie wastie the replace
+    for(size_t curr_patidx = 0; curr_patidx < rep_len; ++curr_patidx) 
+      strData(str)[curr_patidx + idx] = replace[curr_patidx];
+
+  }
+  else { // Create a new string; operate on it; move it to prev string
+    String temp = str_slice(str, 0, idx);  
+    str_concat_cstr(temp, replace);
+    
+    str_concat_cstr(temp, strData(str) + idx + pat_len);
+
+    str = str_move(str, temp);
+    str_destroy(temp);
+  }
+
+  strLength(str) += len_diff;
+  str->state = strOk;
+  strData(str)[strLength(str)+1] = '\0';
+
+  return str;
 }
 
 String str_foreach(String str, int (*apply)(int)) {
@@ -500,12 +553,6 @@ void str_destroy(String str) {
 
   if(str->data)
     free(str->data);
-
-  // TODO: clean up?
-  str->data = NULL;
-  str->length = 0;
-  str->capacity = 0;
-  str->state = strOk;
 
   free(str);
 }

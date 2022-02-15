@@ -196,11 +196,24 @@ long int str_find_first(String str, const char* pattern);
  */
 long int str_find_last(String str, const char* pattern);
 
+
 /* replaces the all the occurances with the given string(does it in a new string, 
  * and then moves it into the current string)
+ * if replace is NULL, it just removes the pattern from the string
  * returns a the final string
  */
 String str_replace_all(String str, const char* pattern, const char* replace);
+
+
+/* Replaces the first occurance of the pattern
+ * returns the same replaced string
+ */
+String str_replace_first(String str, const char* pattern, const char* replace);
+
+/* Replaces the last occurance of the pattern
+ * returns the same replaced string
+ */
+String str_replace_last(String str, const char* pattern, const char* replace);
 
 
 

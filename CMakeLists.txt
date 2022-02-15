@@ -5,7 +5,6 @@ project(CString VERSION 0.1
                        LANGUAGES C)
 
 # default
-option(BUILD_STATIC_LIB "Build a static library" ON)
 option(BUILD_SHARED_LIB "Build a shared library" OFF)
 
 if(BUILD_SHARED_LIB STREQUAL ON)
@@ -20,6 +19,8 @@ target_compile_features(${PROJECT_NAME} PUBLIC c_std_11)
 
 # Debug flag
 set (CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+
+# Valgrind > sans
 #set (CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -g")
 #set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 
