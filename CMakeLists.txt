@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15...3.22.2)
+cmake_minimum_required(VERSION 3.14...3.22.2)
 
 project(CString VERSION 0.2
                        DESCRIPTION "A simple string library for C"
@@ -20,13 +20,10 @@ target_compile_features(${PROJECT_NAME} PUBLIC c_std_11)
 # Debug flag
 set (CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
-# Valgrind > sans
-#set (CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -g")
-#set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 
 # Run tests only if standalone project
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  include(CTest)
+  include(CTest) 
   enable_testing()
   add_subdirectory(tests)
 endif()

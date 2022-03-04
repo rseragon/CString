@@ -11,6 +11,8 @@ int make() {
 
     assert(strCapacity(s) == 11);
 
+    str_destroy(s);
+
     return 0;
 }
 
@@ -32,6 +34,8 @@ int move() {
 
     assert(strcmp(strData(other), "Some random string") == 0);
 
+    str_destroy(other);
+    str_destroy(s);
     return 0;
 }
 
