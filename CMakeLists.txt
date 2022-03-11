@@ -13,18 +13,18 @@ else()
   add_library(${PROJECT_NAME} STATIC ${CMAKE_SOURCE_DIR}/src/String.c)
 endif()
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include/)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include/CString/)
 
 target_compile_features(${PROJECT_NAME} PUBLIC c_std_11)
 
-# Debug flag
-set (CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
 
 # Run tests only if standalone project
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   include(CTest) 
   enable_testing()
+  # Debug flag
+  set (CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
   add_subdirectory(tests)
 endif()
 

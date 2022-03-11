@@ -4,6 +4,10 @@ Release/
 build/
 out/
 
+# Compile command file
+compile_commands.json
+.cache/
+
 # Prerequisites
 *.d
 

@@ -1,7 +1,7 @@
 # CString(WIP)
 A simple dynamic String library for C
 
-**Version**: 0.1
+**Version**: 0.2
 
 ## Building
 1. Create a build directory

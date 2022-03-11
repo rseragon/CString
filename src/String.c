@@ -64,7 +64,7 @@ String make_str(size_t size) {
         return STR_ERROR;
 
     String string = (String) malloc(sizeof(struct _string));
-    if(string == NULL)
+    if(!string)
         return STR_ERROR;
 
     string->length   = 0;
@@ -75,7 +75,7 @@ String make_str(size_t size) {
     if(_str_allocator(string, size) == strOk) 
         return string;
     else
-        free(string);
+        str_destroy(string);
 
     return STR_ERROR;
 }
