@@ -38,7 +38,7 @@
         fprintf(stderr, GREEN "[Passsed]    " #FUNC "\n" COLOR_RESET);\
     }
 
-#define TEST_STATUS() fprintf(stdout, YELLOW "Tests run:    %d\n" GREEN \
+#define TEST_STATUS() fprintf(stdout, YELLOW "Tests Run:    %d\n" GREEN \
                                              "Tests Passed: %d\n" RED\
                                              "Tests Failed: %d\n" COLOR_RESET,\
                                               TESTS_RUN, TESTS_PASSED, (TESTS_RUN - TESTS_PASSED))

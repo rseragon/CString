@@ -1,7 +1,9 @@
 //#define EXIT_ON_FAILURE 1
 
 #include "utest.h"
-#include "String.h"
+
+/* This is a hack to overcome Memory satnizers bugs */
+#include "String.c"
 
 #include <string.h>
 

@@ -23,7 +23,7 @@ static int _str_allocator(String str, size_t size)
     char *prev_data = str->data;
 
     size_t curr_len = strLength(str);
-    size_t curr_cap = strCapacity(str);
+    //size_t curr_cap = strCapacity(str);
 
     char *temp = (char *) malloc(size + 1); // Create a new char array, +1 for \0
 

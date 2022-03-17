@@ -4,6 +4,13 @@
 #include <string.h> // For string functions
 #include <stdlib.h> // For malloc 
 
+#if !(__STDC_VERSION__ >= 201112L || __cplusplus >= 199900L)
+    #pragma message("Compiling in older versions of C/C++")
+    typedef enum bool {FALSE, TRUE};
+#else
+    #include <stdbool.h>
+#endif
+
 typedef enum {strError = -1, strOk = 1} strCode;
 
 struct _string {
@@ -184,6 +191,14 @@ int strn_cmp_caseless(const String str1, const String str2, size_t len);
  */
 int str_cmp_slice_caseless(const String str1, const String str2,
                            size_t start1    , size_t start2    , size_t len);
+
+
+/* 
+ * Checks if the string starts with the given 
+ * sequence
+ * returns 1 for true and 0 for false
+ */
+//bool str_starts_with(const String str, const char* pattern);
 
 
 /*
