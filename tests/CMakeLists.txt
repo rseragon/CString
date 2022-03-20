@@ -12,23 +12,21 @@ FetchContent_MakeAvailable(Sanitizers)
 set(Sanitizers_DIR "${CMAKE_BINARY_DIR}/_deps/sanitizers-src/cmake")
 list(APPEND CMAKE_MODULE_PATH "${Sanitizers_DIR}")
 
-#set(SANITIZE_ADDRESS ON)
+set(SANITIZE_ADDRESS ON)
 set(SANITIZE_MEMORY ON)
 set(SANITIZE_LINK_STATIC OFF)
 
-# To track the origin of memsan error
-if(SANITIZE_MEMORY)
-    #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer -O2")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
-endif()
-
 find_package(Sanitizers)
 
-add_executable(testlib utest.c)
-add_sanitizers(testlib)
+add_executable(NormalTests normal_tests.c)
+add_sanitize_address(NormalTests)
+target_compile_features(NormalTests PRIVATE c_std_11)
+target_link_libraries(NormalTests PRIVATE CString)
 
-target_compile_features(testlib PRIVATE c_std_11)
+add_executable(MemSanTests memsan_tests.c)
+add_sanitize_memory(MemSanTests)
+target_compile_features(MemSanTests PRIVATE c_std_11)
+target_link_libraries(MemSanTests PRIVATE CString)
 
-target_link_libraries(testlib PRIVATE CString)
-
-add_test(NAME SimpleTest1 COMMAND testlib)
+add_test(NAME MemSanTests COMMAND MemSanTests)
+add_test(NAME NormalTest COMMAND NormalTests)

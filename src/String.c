@@ -1,4 +1,4 @@
-#include "String.h"
+#include "CString/String.h"
 #include <string.h> // strncpy, memset, strlen
 #include <ctype.h>  // toupper, tolower
 #include <stdlib.h> // abs, malloc
