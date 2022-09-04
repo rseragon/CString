@@ -2,7 +2,7 @@
 
 #include "utest.h"
 
-/* This is a hack to overcome Memory satnizers bugs */
+/* This is a hack to overcome Memory satanizer bugs */
 #include "String.c"
 
 #include <string.h>
