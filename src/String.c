@@ -1,4 +1,5 @@
 #include "CString/String.h"
+#include <stdbool.h>
 #include <string.h> // strncpy, memset, strlen
 #include <ctype.h>  // toupper, tolower
 #include <stdlib.h> // abs, malloc
@@ -334,6 +335,39 @@ int str_cmp_slice_caseless(const String str1, const String str2,
 
     return (eq == len);
 }
+
+bool str_starts_with(const String str, const char* pattern) {
+
+	// No pattern == false
+	if (pattern == NULL) {
+		return 0;
+	}
+	
+	int idx = 0;
+	char* ptn_ptr = pattern;
+	char* str_ptr = str->data;
+
+	while(*ptn_ptr != '\0' && *str_ptr != '\0') {
+		if(*ptn_ptr != * str_ptr) {
+			return 0;
+		}
+		ptn_ptr++;
+		str_ptr++;
+		idx++;
+	}
+
+	if(strlen(pattern) == idx) {
+		return 1;
+	}
+
+	return 0;
+}
+
+bool str_ends_with(const String str, const char*pattern) {
+	// TODO
+	return 0;
+}
+
 
 // TODO: better algo?
 long int str_find_first(String str, const char* pattern) {

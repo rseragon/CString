@@ -23,6 +23,11 @@ add_sanitize_address(NormalTests)
 target_compile_features(NormalTests PRIVATE c_std_11)
 target_link_libraries(NormalTests PRIVATE CString)
 
+add_executable(StartEndTest starts_ends_test.c)
+target_compile_features(StartEndTest PRIVATE c_std_11)
+target_link_libraries(StartEndTest PRIVATE CString)
+
+
 add_executable(MemSanTests memsan_tests.c)
 add_sanitize_memory(MemSanTests)
 target_compile_features(MemSanTests PRIVATE c_std_11)
@@ -30,3 +35,4 @@ target_link_libraries(MemSanTests PRIVATE CString)
 
 add_test(NAME MemSanTests COMMAND MemSanTests)
 add_test(NAME NormalTest COMMAND NormalTests)
+add_test(NAME StartEndTest COMMAND StartEndTest)

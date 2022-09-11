@@ -198,7 +198,15 @@ int str_cmp_slice_caseless(const String str1, const String str2,
  * sequence
  * returns 1 for true and 0 for false
  */
-//bool str_starts_with(const String str, const char* pattern);
+bool str_starts_with(const String str, const char* pattern);
+
+
+/* 
+ * Checks if the string starts with the given 
+ * sequence
+ * returns 1 for true and 0 for false
+ */
+bool str_ends_with(const String str, const char* pattern);
 
 
 /*
@@ -232,8 +240,7 @@ String str_replace_last(String str, const char* pattern, const char* replace);
 
 
 
-/*
- * Applies the fucntion to every character in the string
+/* Applies the fucntion to every character in the string
  * returns the same string
  */
 String str_foreach(String str1, int (*apply)(int));

@@ -1,4 +1,4 @@
-//#define EXIT_ON_FAILURE 1
+#define EXIT_ON_FAILURE 1
 
 #include "utest.h"
 #include <string.h>
