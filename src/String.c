@@ -1,5 +1,4 @@
 #include "CString/String.h"
-#include <stdbool.h>
 #include <string.h> // strncpy, memset, strlen
 #include <ctype.h>  // toupper, tolower
 #include <stdlib.h> // abs, malloc
@@ -364,7 +363,28 @@ bool str_starts_with(const String str, const char* pattern) {
 }
 
 bool str_ends_with(const String str, const char*pattern) {
-	// TODO
+	int pat_len = strlen(pattern);
+
+	if (str->length < pat_len) {
+		return 0;
+	}
+	char *ptn_ptr = pattern;
+	char *str_ptr = str->data;
+	str_ptr += str->length - pat_len;
+	int idx = 0;
+
+	while(*str_ptr != '\0' && *ptn_ptr != '\0') {
+		if(*ptn_ptr != *str_ptr) {
+			return 0;
+		}
+		ptn_ptr++;
+		str_ptr++;
+		idx++;
+	}
+
+	if(idx == pat_len)
+		return 1;
+
 	return 0;
 }
 
