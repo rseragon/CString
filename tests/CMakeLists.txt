@@ -18,16 +18,23 @@ set(SANITIZE_LINK_STATIC OFF)
 
 find_package(Sanitizers)
 
+# normal_tests.c
 add_executable(NormalTests normal_tests.c)
 add_sanitize_address(NormalTests)
 target_compile_features(NormalTests PRIVATE c_std_11)
 target_link_libraries(NormalTests PRIVATE CString)
 
+# starts_ends_test.c
 add_executable(StartEndTest starts_ends_test.c)
 target_compile_features(StartEndTest PRIVATE c_std_11)
 target_link_libraries(StartEndTest PRIVATE CString)
 
+# inserts.c
+add_executable(InsertTests inserts.c)
+target_compile_features(InsertTests PRIVATE c_std_11)
+target_link_libraries(InsertTests PRIVATE CString)
 
+# memsan_tests.c
 add_executable(MemSanTests memsan_tests.c)
 add_sanitize_memory(MemSanTests)
 target_compile_features(MemSanTests PRIVATE c_std_11)
@@ -36,3 +43,4 @@ target_link_libraries(MemSanTests PRIVATE CString)
 add_test(NAME MemSanTests COMMAND MemSanTests)
 add_test(NAME NormalTest COMMAND NormalTests)
 add_test(NAME StartEndTest COMMAND StartEndTest)
+add_test(NAME InsertTests COMMAND InsertTests)

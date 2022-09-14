@@ -82,7 +82,7 @@ String make_str(size_t size) {
 
 String str_from_cstr(const char *cstr)
 {
-    if(cstr == NULL)
+    if(!cstr)
         return STR_ERROR;
 
     size_t len = strlen(cstr);
@@ -164,17 +164,15 @@ String str_set(String str, char fill, size_t size) {
 }
 
 
-// TODO: Memory leaks?
 String str_insert_char(String str, const char c, size_t insert_idx) {
 
-    if(insert_idx > strLength(str)) {
-        str->state = strError;
+    if(insert_idx > strLength(str) || insert_idx < 0) {
         return str;
     }
 
     _str_allocator(str, strLength(str) + 2);
 
-    for(size_t curr_idx = strLength(str); curr_idx >= insert_idx; --curr_idx) {
+    for(size_t curr_idx = strLength(str); curr_idx > insert_idx; --curr_idx) {
         strData(str)[curr_idx] = strData(str)[curr_idx-1];
     }
     strData(str)[insert_idx] = c;
