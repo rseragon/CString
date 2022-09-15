@@ -111,6 +111,15 @@ String str_insert_char(String str, const char c, size_t idx);
 /*
  * Inserts the given string at the given index
  * returns the same? string with inserted string
+ *
+ * eg:
+ * String:   "This is a"
+ * toInsert: " string"
+ * insert at len-1 = "This is  stringa"
+ * insert at len   = "This is a string"
+ *
+ * RETURN NEW STRING??
+ * TODO
  */
 String str_insert_cstr(String str, const char* ins, size_t idx);
 

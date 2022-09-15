@@ -182,7 +182,12 @@ String str_insert_char(String str, const char c, size_t insert_idx) {
     return str;
 }
 
+// TODO: Return the same string? instead of creating a new one
 String str_insert_cstr(String str, const char* ins, size_t idx) {
+
+	if(idx > strLength(str) || idx < 0) {
+		return str;
+	}
 
     String temp = str_slice(str, 0, idx);
     str_concat_cstr(temp, ins);

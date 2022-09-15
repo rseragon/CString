@@ -1,5 +1,6 @@
 #include "utest.h"
 #include "CString/String.h"
+#include <stdio.h>
 #include <string.h>
 
 
@@ -46,11 +47,49 @@ int char_insert_last() {
 	return 0;
 }
 
+int str_insert_first() {
+
+	String s = str_from_cstr("is a string");
+
+	String res = str_insert_cstr(s, "This ", 0);
+
+	assert(strcmp(strData(res), "This is a string") == 0);
+
+	return 0;
+}
+
+int str_insert_middle() {
+
+	String s = str_from_cstr("This a string");
+
+	String res = str_insert_cstr(s, "is ", 5);
+
+	assert(strcmp(strData(res), "This is a string") == 0);
+
+	return 0;
+}
+
+int str_insert_last() {
+
+	String s = str_from_cstr("This is a");
+
+	String res = str_insert_cstr(s, " string", strLength(s));
+
+	printf("%s\n", strData(res));
+	assert(strcmp(strData(res), "This is a string") == 0);
+
+	return 0;
+}
+
 int main(void) {
 
 	RUN_TEST(char_insert_middle);
 	RUN_TEST(char_insert_first);
 	RUN_TEST(char_insert_last);
+
+	RUN_TEST(str_insert_first);
+	RUN_TEST(str_insert_middle);
+	RUN_TEST(str_insert_last);
 	
 	TEST_STATUS();
 }
