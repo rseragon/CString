@@ -81,6 +81,43 @@ int str_insert_last() {
 	return 0;
 }
 
+String _str_insert_cstr(String str, const char* insert_str, size_t insert_idx);
+int str_insert_first_newapi() {
+
+	String s = str_from_cstr("is a string");
+
+	_str_insert_cstr(s, "This ", 0);
+
+	assert(strcmp(strData(s), "This is a string") == 0);
+	assert(strLength(s) == 16);
+
+	return 0;
+}
+
+int str_insert_middle_newapi() {
+
+	String s = str_from_cstr("This a string");
+
+	_str_insert_cstr(s, "is ", 5);
+
+	assert(strcmp(strData(s), "This is a string") == 0);
+	assert(strLength(s) == 16);
+
+	return 0;
+}
+
+int str_insert_last_newapi() {
+
+	String s = str_from_cstr("This is a");
+
+	_str_insert_cstr(s, " string", strLength(s));
+
+	assert(strcmp(strData(s), "This is a string") == 0);
+	assert(strLength(s) == 16);
+
+	return 0;
+}
+
 int main(void) {
 
 	RUN_TEST(char_insert_middle);
@@ -90,6 +127,10 @@ int main(void) {
 	RUN_TEST(str_insert_first);
 	RUN_TEST(str_insert_middle);
 	RUN_TEST(str_insert_last);
+
+	RUN_TEST(str_insert_first_newapi);
+	RUN_TEST(str_insert_middle_newapi);
+	RUN_TEST(str_insert_last_newapi);
 	
 	TEST_STATUS();
 }

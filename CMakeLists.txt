@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14...3.22.2)
 
-project(CString VERSION 0.2
+project(CString VERSION 0.4
         DESCRIPTION "A simple string library for C"
         LANGUAGES C)
 

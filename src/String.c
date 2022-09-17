@@ -182,24 +182,58 @@ String str_insert_char(String str, const char c, size_t insert_idx) {
     return str;
 }
 
-// TODO: Return the same string? instead of creating a new one
-String str_insert_cstr(String str, const char* ins, size_t idx) {
+// TODO: optimizations
+String _str_insert_cstr(String str, const char* insert_str, size_t insert_idx) {
 
-	if(idx > strLength(str) || idx < 0) {
+	if(insert_idx > strLength(str) || insert_idx < 0) {
 		return str;
 	}
 
-    String temp = str_slice(str, 0, idx);
-    str_concat_cstr(temp, ins);
+	int insert_len = strlen(insert_str);
 
-    //String slice_temp = str_slice(str, idx, strLength(str));
+	char* old_data = str->data;
 
-    // TODO: Check working
-    temp = str_concat_cstr(temp, strData(str) + idx);
+	str->data = (char *) malloc(sizeof(char) * (insert_len + strLength(str) + 1));
 
-    //str_destroy(slice_temp);
+	for(int str_idx = 0; str_idx < insert_idx; str_idx++) {
+		str->data[str_idx] = old_data[str_idx];
+	}
 
-    return temp;
+	for(int relative_insert_idx = 0; relative_insert_idx < insert_len; relative_insert_idx++) {
+		str->data[relative_insert_idx + insert_idx] = insert_str[relative_insert_idx];
+	}
+
+	int remaining_iter_len = strLength(str) - (insert_idx - insert_len);
+	for(int relative_str_idx = 0; relative_str_idx < remaining_iter_len; relative_str_idx++) {
+		str->data[relative_str_idx + insert_idx + insert_len] = old_data[relative_str_idx + insert_idx];
+	}
+
+	str->length = strLength(str) + insert_len;
+	str->data[str->length] = '\0';
+
+	return str;
+}
+
+// TODO: Return the same string? instead of creating a new one
+String str_insert_cstr(String str, const char* ins, size_t idx) {
+
+	return _str_insert_cstr(str, ins, idx);
+
+	// if(idx > strLength(str) || idx < 0) {
+	// 	return str;
+	// }
+ //
+ //    String temp = str_slice(str, 0, idx);
+ //    str_concat_cstr(temp, ins);
+ //
+ //    //String slice_temp = str_slice(str, idx, strLength(str));
+ //
+ //    // TODO: Check working
+ //    temp = str_concat_cstr(temp, strData(str) + idx);
+ //
+ //    //str_destroy(slice_temp);
+ //
+ //    return temp;
 }
 
 // Return a new string?
