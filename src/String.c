@@ -153,13 +153,24 @@ String str_slice(const String str, long int start, long int end) {
 }
 
 
-String str_set(String str, char fill, size_t size) {
-    _str_allocator(str, size); 
+String str_set(String str, char fill, size_t start_idx, size_t end_idx) {
 
-    for(size_t idx = 0; idx < size; ++idx) {
+	if(end_idx < 0) {
+		return str;
+	}
+
+    _str_allocator(str, end_idx); 
+
+    for(size_t idx = start_idx; idx < end_idx; ++idx) {
         strData(str)[idx] = fill;
     }
 
+	if(end_idx > strLength(str)) {
+		strLength(str) = end_idx;
+	}
+
+	strData(str)[strLength(str)] = '\0'; // Just in case
+	
     return str;
 }
 
@@ -214,7 +225,6 @@ String _str_insert_cstr(String str, const char* insert_str, size_t insert_idx) {
 	return str;
 }
 
-// TODO: Return the same string? instead of creating a new one
 String str_insert_cstr(String str, const char* ins, size_t idx) {
 
 	return _str_insert_cstr(str, ins, idx);
@@ -236,7 +246,6 @@ String str_insert_cstr(String str, const char* ins, size_t idx) {
  //    return temp;
 }
 
-// Return a new string?
 String str_concat_char(String str, const char c) {
     // Error checking?
 

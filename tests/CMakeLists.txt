@@ -34,6 +34,11 @@ add_executable(InsertTests inserts.c)
 target_compile_features(InsertTests PRIVATE c_std_11)
 target_link_libraries(InsertTests PRIVATE CString)
 
+# miscellaneous.c
+add_executable(MiscellaneousTests miscellaneous_tests.c)
+target_compile_features(MiscellaneousTests PRIVATE c_std_11)
+target_link_libraries(MiscellaneousTests PRIVATE CString)
+
 # memsan_tests.c
 add_executable(MemSanTests memsan_tests.c)
 add_sanitize_memory(MemSanTests)
@@ -43,4 +48,5 @@ target_link_libraries(MemSanTests PRIVATE CString)
 add_test(NAME MemSanTests COMMAND MemSanTests)
 add_test(NAME NormalTest COMMAND NormalTests)
 add_test(NAME StartEndTest COMMAND StartEndTest)
+add_test(NAME MiscellaneousTests COMMAND MiscellaneousTests)
 add_test(NAME InsertTests COMMAND InsertTests)

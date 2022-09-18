@@ -94,13 +94,15 @@ String str_slice(const String str, long int start, long int end);
 /*
  * Sets the given string with the value
  *
- * if the string size is small, it will
+ * if the string end_idx is lsser than length, it will
  * be automatically increased to meet the required
  * size
  *
+ * returns the same string on invalid end_idx
+ *
  * returns the same string
  */
-String str_set(String str, char fill, size_t size);
+String str_set(String str, char fill, size_t start_idx, size_t end_idx);
 
 /*
  * Inserts the char at the given index
@@ -118,8 +120,7 @@ String str_insert_char(String str, const char c, size_t idx);
  * insert at len-1 = "This is  stringa"
  * insert at len   = "This is a string"
  *
- * RETURN NEW STRING??
- * TODO
+ * returns the same String
  */
 String str_insert_cstr(String str, const char* ins, size_t idx);
 

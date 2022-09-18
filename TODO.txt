@@ -1,1 +1,3 @@
 regex in find/replace?
+
+benchmark function timing
