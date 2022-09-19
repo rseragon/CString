@@ -103,6 +103,9 @@ String str_from_cstr(const char *cstr)
 
 String str_copy(const String str) {
 
+	if(!str)
+		return NULL;
+
     String temp = make_str(strCapacity(str));
 
     if(strInvalid(temp))
@@ -138,6 +141,10 @@ String str_move(String dest, String src) {
 }
 
 String str_slice(const String str, long int start, long int end) {
+
+	if(!str)
+		return STR_ERROR;
+
     size_t len = end - start;
 
     String temp = make_str(len);
@@ -158,6 +165,9 @@ String str_set(String str, char fill, size_t start_idx, size_t end_idx) {
 	if(end_idx < 0) {
 		return str;
 	}
+
+	if(!str || strInvalid(str))
+		return NULL;
 
     _str_allocator(str, end_idx); 
 
@@ -248,6 +258,9 @@ String str_insert_cstr(String str, const char* ins, size_t idx) {
 
 String str_concat_char(String str, const char c) {
     // Error checking?
+
+	if(!str)
+		return NULL;
 
     _str_allocator(str, strLength(str)+1); // Tho it's guranteed by me that the string
                                            // will have always an extra char space,
@@ -383,9 +396,16 @@ int str_cmp_slice_caseless(const String str1, const String str2,
 
 bool str_starts_with(const String str, const char* pattern) {
 
+	// No pattern or string == true
+	if(!str && !pattern)
+		return true; // :D
+	
+	if(!str)
+		return false;
+
 	// No pattern == false
-	if (pattern == NULL) {
-		return 0;
+	if (!pattern) {
+		return false;
 	}
 	
 	int idx = 0;
@@ -409,6 +429,14 @@ bool str_starts_with(const String str, const char* pattern) {
 }
 
 bool str_ends_with(const String str, const char*pattern) {
+
+	if(!str && !pattern) {
+		return true;
+	}
+
+	if(!str || !pattern)
+		return false;
+
 	int pat_len = strlen(pattern);
 
 	if (str->length < pat_len) {
@@ -661,6 +689,9 @@ String str_lower(String str) {
 }
 
 String str_reverse(String str) {
+	if(!str)
+		return NULL;
+
     int len = strLength(str);
 
     for(int idx = 0; idx < len/2; ++idx) {
@@ -675,6 +706,9 @@ String str_reverse(String str) {
 }
 
 String str_truncate(String str, size_t size) {
+	if(!str)
+		return NULL;
+
     if(strLength(str) == size)
         return str;
 
@@ -692,6 +726,7 @@ void str_delete(String str) {
     str->data[0]  = '\0';
     str->state    = strOk;
     // Capacity will remain the same
+	// for further operations
 }
 
 void str_destroy(String str) {

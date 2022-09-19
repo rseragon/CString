@@ -99,8 +99,8 @@ String str_slice(const String str, long int start, long int end);
  * size
  *
  * returns the same string on invalid end_idx
+ * returns null on invalid String
  *
- * returns the same string
  */
 String str_set(String str, char fill, size_t start_idx, size_t end_idx);
 
@@ -127,6 +127,7 @@ String str_insert_cstr(String str, const char* ins, size_t idx);
 /*
  * Append a char to current string
  * returns the same string with the appended char
+ * returns NULL on NULL str
  */
 String str_concat_char(String str, const char c);
 
@@ -207,6 +208,11 @@ int str_cmp_slice_caseless(const String str1, const String str2,
  * Checks if the string starts with the given 
  * sequence
  * returns 1 for true and 0 for false
+ *
+ * caveats: 
+ *	No patter or string == true
+ *	No pattern == false
+ *
  */
 bool str_starts_with(const String str, const char* pattern);
 
