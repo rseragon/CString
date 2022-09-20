@@ -221,6 +221,10 @@ bool str_starts_with(const String str, const char* pattern);
  * Checks if the string starts with the given 
  * sequence
  * returns 1 for true and 0 for false
+ *
+ * caveats: 
+ *	No patter or string == true
+ *	No pattern == false
  */
 bool str_ends_with(const String str, const char* pattern);
 
@@ -279,12 +283,14 @@ String str_lower(String str);
 /*
  * Reverses the given string
  * returns the same string
+ * returns Null on null input
  */
 String str_reverse(String str);
 
 
 /* Truncates the given string to the length to save space
  * returns a new string if it is truncated
+ * returns Null on null input
  */
 String str_truncate(String str, size_t size);
 

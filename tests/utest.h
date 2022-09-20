@@ -2,6 +2,7 @@
 #define _UTESTS
 
 #include <stdio.h>
+#include <time.h> // For benchmarking
 #include "colors.h"
 
 #ifdef assert
