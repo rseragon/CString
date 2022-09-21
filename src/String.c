@@ -409,7 +409,7 @@ bool str_starts_with(const String str, const char* pattern) {
 	}
 	
 	int idx = 0;
-	char* ptn_ptr = pattern;
+	char* ptn_ptr = (char *) pattern;
 	char* str_ptr = str->data;
 
 	while(*ptn_ptr != '\0' && *str_ptr != '\0') {
@@ -442,7 +442,7 @@ bool str_ends_with(const String str, const char*pattern) {
 	if (str->length < pat_len) {
 		return 0;
 	}
-	char *ptn_ptr = pattern;
+	char *ptn_ptr = (char *) pattern;
 	char *str_ptr = str->data;
 	str_ptr += str->length - pat_len;
 	int idx = 0;

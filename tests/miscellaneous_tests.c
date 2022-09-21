@@ -30,10 +30,27 @@ int for_each() {
 	return 0;
 }
 
+int delete_str() {
+	String s = make_str(10);
+
+	assert(strLength(s) == 0);
+	assert(strCapacity(s) == 11); // for \0
+	assert(strData(s));
+
+	str_delete(s);
+	
+	assert(strLength(s) == 0);
+	assert(strCapacity(s) == 11);
+	assert(*strData(s) == '\0');
+
+	return 0;
+}
+
 int main() {
 
 	RUN_TEST(set_string);
 	RUN_TEST(for_each);
+	RUN_TEST(delete_str);
 
 	TEST_STATUS();
 }
