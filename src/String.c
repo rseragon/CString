@@ -1,4 +1,6 @@
 #include "CString/String.h"
+#include <stdarg.h>
+#include <stdio.h>
 #include <string.h> // strncpy, memset, strlen
 #include <ctype.h>  // toupper, tolower
 #include <stdlib.h> // abs, malloc
@@ -98,6 +100,29 @@ String str_from_cstr(const char *cstr)
     string->length    = len;
 
     return string;
+}
+
+String str_from_fmtstr(const char *fstr, ...) {
+
+	// Return empty string on NULL fstr
+	if(!fstr)
+		return make_str(0);
+
+	const int MAX_LEN = 1024; // TODO
+
+	va_list fargs;
+	String result_str;
+
+	char buff[MAX_LEN]; // TODO: Optimize this
+
+	va_start(fargs, fstr);
+	int len = vsnprintf(buff, MAX_LEN, fstr, fargs); // TODO: Remove hardcoding
+	va_end(fargs);
+
+	buff[len] = '\0'; // Just in case
+	result_str = str_from_cstr(buff);
+
+	return result_str;
 }
 
 

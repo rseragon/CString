@@ -2,7 +2,9 @@
 #define __String_h
 
 #include <string.h> // For string functions
+#include <stdio.h> // For vsprintf
 #include <stdlib.h> // For malloc 
+#include <stdarg.h> // varargs
 
 #if !(__STDC_VERSION__ >= 201112L || __cplusplus >= 199900L)
     #pragma message("Compiling in older versions of C/C++")
@@ -64,6 +66,15 @@ String make_str(size_t size);
  * returns new String
  */
 String str_from_cstr(const char *str);
+
+/*
+ * NOTE: Potentially unsafe
+ * NOTE2: Only supports final str size upto 1024 
+ * Makes a string with format options
+ *
+ * returns empty string on NULL fstr
+ */
+String str_from_fmtstr(const char *fstr, ...);
 
 /* 
  * copipes a string 
