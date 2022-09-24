@@ -108,15 +108,13 @@ String str_from_fmtstr(const char *fstr, ...) {
 	if(!fstr)
 		return make_str(0);
 
-	const int MAX_LEN = 1024; // TODO
-
 	va_list fargs;
 	String result_str;
 
-	char buff[MAX_LEN]; // TODO: Optimize this
+	char buff[STR_MAX_FMT_STR_SIZE]; // TODO: Optimize this
 
 	va_start(fargs, fstr);
-	int len = vsnprintf(buff, MAX_LEN, fstr, fargs); // TODO: Remove hardcoding
+	int len = vsnprintf(buff, STR_MAX_FMT_STR_SIZE, fstr, fargs);
 	va_end(fargs);
 
 	buff[len] = '\0'; // Just in case
@@ -125,6 +123,26 @@ String str_from_fmtstr(const char *fstr, ...) {
 	return result_str;
 }
 
+String strn_from_fmtstr(const char *fstr, int max_fmt_str_len, ...) {
+
+	// Return empty string on NULL fstr
+	if(!fstr)
+		return make_str(0);
+
+	va_list fargs;
+	String result_str;
+
+	char buff[max_fmt_str_len]; // VLA's == BAD
+
+	va_start(fargs, max_fmt_str_len);
+	int len = vsnprintf(buff, max_fmt_str_len, fstr, fargs); 
+	va_end(fargs);
+
+	buff[len] = '\0'; // Just in case
+	result_str = str_from_cstr(buff);
+
+	return result_str;
+}
 
 String str_copy(const String str) {
 

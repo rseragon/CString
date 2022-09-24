@@ -1,7 +1,6 @@
 #include "utest.h"
 #include "CString/String.h"
 
-
 int simple_str_format() {
 
 	String s = str_from_fmtstr("test: %d", 1, NULL);

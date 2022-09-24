@@ -37,6 +37,9 @@ extern String STR_ERROR;
 
 #define STR_DEFAULT_SIZE 15 // default string size
 
+#define STR_MAX_FMT_STR_SIZE 1024 // Default format string size
+								  // after that, it'll get truncated
+
 #define STR_DEFAULT_CAPACITY_INCREMENT 5 // Default increment size
 
 // TODO
@@ -69,12 +72,23 @@ String str_from_cstr(const char *str);
 
 /*
  * NOTE: Potentially unsafe
- * NOTE2: Only supports final str size upto 1024 
+ * NOTE2: Only supports final str size upto STR_MAX_FMT_STR_SIZE
  * Makes a string with format options
  *
  * returns empty string on NULL fstr
  */
 String str_from_fmtstr(const char *fstr, ...);
+
+/*
+ * NOTE: Potentially unsafe
+ * NOTE2: Uses's Variable length array's; So, use with precaution
+ * Makes a string with format options
+ *
+ * limits the max fmt string size
+ *
+ * returns empty string on NULL fstr
+ */
+String strn_from_fmtstr(const char *fstr, int max_fmt_str_size, ...);
 
 /* 
  * copipes a string 
