@@ -7,19 +7,17 @@ project(CString VERSION 0.5
 # default
 option(BUILD_SHARED_LIB "Build a shared library" OFF)
 
-
 if(BUILD_SHARED_LIB STREQUAL ON)
-    add_library(${PROJECT_NAME} SHARED ${CMAKE_SOURCE_DIR}/src/String.c)
+	add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCE_DIR}/src/String.c)
 else()
-    add_library(${PROJECT_NAME} STATIC ${CMAKE_SOURCE_DIR}/src/String.c)
+	add_library(${PROJECT_NAME} STATIC ${PROJECT_SOURCE_DIR}/src/String.c)
 endif()
 
 target_compile_features(${PROJECT_NAME} PRIVATE c_std_11)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-
-
+set(CSTRING_LIB_HEADERS ${PROJECT_SOURCE_DIR}/include)
 
 # Run tests only if standalone project
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
@@ -34,4 +32,3 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
     add_subdirectory(tests)
 endif()
-
