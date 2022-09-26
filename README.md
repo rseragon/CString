@@ -25,11 +25,11 @@ ctest
 4. Using the library 
 	1. add as git submodule (other method are also possible, but this is recommended)
 	```
-    git add https://github.com/rseragon/CString.git
+    git submodule add https://github.com/rseragon/CString.git
     ```
     2. Add the sub-directory (in cmake file)
     ```cmake
-    add_subdirectory(CString)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/path/to/CString)
     ```
     3. Link the library
     ```cmake
